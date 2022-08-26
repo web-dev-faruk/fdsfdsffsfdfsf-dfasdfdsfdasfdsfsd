@@ -2,36 +2,155 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">https://github.com/web-dev-faruk/project_8_collatzconjecture/blob/main/index.html
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="style.css">
-
 </head>
 <body>
-    <h1>
-        Collatz Conjecture
-    </h1>
-    <h2>
-        For perfect Output <br>Enter 41<br>
-        Don't forget to refresh before start
-    </h2>
-    <input id="input" type="text" value="">
-    <button onclick="moveCircle()">
-        Start
-    </button>
-    <div id="demoArea" style="overflow: scroll;">
+    <h3>
+        ARRAY MULTIPLICATION
+    </h3>
+    <span style="background-color: rgb(255, 194, 194);">WARNING: COLUMN OF A MATRIX MUST BE EQUAL TO ROW OF B MATRIX</span>
+    
+    <div id="dimIn">
+        <h4 id="dimInHeadA">
+            Enter the dimension of Matrix A
+        </h4>
+        <input id="dimIn1" type="number" placeholder="ROW NUMBER">
         
+        <input id="dimIn2" type="number" placeholder="COLUMN NUMBER">
+        
+        <h4 id="dimInHeadB">
+            Enter the dimension of Matrix B
+        </h4>
+        
+        <input id="dimIn3" type="number" placeholder="ROW NUMBER">
+        
+        <input id="dimIn4" type="number" placeholder="COLUMN NUMBER">
+        <button id="nextbutton" onclick="submitf()" type="submit">Next</button>
     </div>
-    <div id="circleContainer" style="overflow: scroll;">
-        <div id="circle">
-            
-        </div>
-    </div>
-    <div id="outPut">
 
+
+    <div id="matvalues">
+        <div id="amatinvalue" aria-placeholder="df"></div>
+        <div id="bmatinvalue"></div> 
+        <button id="multibutton" onclick="multiplif()" type="submit">MULTIPLICATION</button>
     </div>
-    <script src="script.js">
-    </script>
+
+    <div id="outputhead"></div>
+    <div id="output" style="background-color: red;">
+    </div>
+
+    <!-- try again button -->
+    <button id="tryagainbtn" onclick="tryf()">Try Again</button>
+
 </body>
+<script>
+    var dim=[];
+    var amat=[];
+    var bmat=[];
+    var multimat=[];
+    function submitf(){
+
+        for (let index = 1; index <= 4; index++) {
+            dim[index-1]=parseFloat(document.getElementById(`dimIn${index}`).value)
+        }
+        
+
+        if (dim[1]!=dim[2]) {
+            // warning 
+            document.getElementById("amatinvalue").innerHTML='Please enter valid dimensions.<br>';
+            document.getElementById("bmatinvalue").innerHTML='Please enter valid dimensions.<br>';
+            // hide multiply button
+            document.getElementById("multibutton").style.display="none";
+
+            console.log(`Please enter valid dimensions.`);
+        }
+        else{
+            // hide old input of matrix
+            document.getElementById(`amatinvalue`).innerHTML="";
+            document.getElementById(`bmatinvalue`).innerHTML="";
+            // show title of a and b matrix
+            document.getElementById(`amatinvalue`).innerHTML+="ENTER ROW WISE A MATRIX ELEMENTS";
+            document.getElementById(`bmatinvalue`).innerHTML+="ENTER ROW WISE B MATRIX ELEMENTS";
+            for (let index = 1; index <= dim[0]*dim[1]; index++) {
+                document.getElementById("amatinvalue").innerHTML+=`<br><input style="display:inline" class="ainvalue" id="ainvalue${index}" type="number">`;
+                
+            }
+            for (let index = 1; index <= dim[2]*dim[3]; index++) {
+                document.getElementById("bmatinvalue").innerHTML+=`<br><input style="display:inline" class="binvalue" id="binvalue${index}" type="number">`;
+                
+            }
+            // show multiplication button
+            document.getElementById('multibutton').style.display='inline';
+
+        }
+    }
+    // multiplication function
+    function multiplif(){
+        
+        // hide nextbutton
+        document.getElementById("nextbutton").style.display="none";
+
+        // hide multibutton
+        document.getElementById("multibutton").style.display="none";
+        // show try again button
+        document.getElementById("tryagainbtn").style.display="inline";
+        
+        for (let index = 1; index <= dim[0]*dim[1]; index++) {
+            amat[index-1]= parseFloat(document.getElementById(`ainvalue${index}`).value);
+           
+        }
+        for (let index = 1; index <= dim[2]*dim[3]; index++) {
+            bmat[index-1]=parseFloat(document.getElementById(`binvalue${index}`).value);   
+        }
+    
+        //output area
+        for (let i = 1; i <=dim[0]; i++) {
+            for (let k = 1; k <=dim[3]; k++) { 
+                let mu1=0;
+                for (let j = 1; j <=dim[2]; j++) {  
+                    mu1=mu1+(amat[(i-1)*dim[2]+j-1])*(bmat[(j-1)*dim[3]+k-1])
+                }
+                multimat[(((i-1)*dim[3])+k)-1]=mu1;
+            }
+
+        }
+        // display result
+        document.getElementById("outputhead").innerHTML='RESULT';
+        document.getElementById('output').style.display='inline';
+        for (let x = 1; x <= multimat.length; x++) {
+            document.getElementById("output").innerHTML+=multimat[x-1]+"  ";
+            if (x % (dim[3])==0) {
+                 document.getElementById("output").innerHTML+="<br>";
+            }
+        } 
+
+        console.log(dim);
+        console.log(amat);
+        console.log(bmat);
+        console.log('hi');
+        console.log(multimat);
+
+    }
+    function tryf(){
+        // hide try again button
+        document.getElementById("tryagainbtn").style.display="none";
+        // show next button
+        document.getElementById("nextbutton").style.display="inline";
+        // hide input value button 
+        document.getElementById(`amatinvalue`).innerHTML="";
+        document.getElementById(`bmatinvalue`).innerHTML="";
+        // hide result
+        document.getElementById("outputhead").innerHTML="";
+        document.getElementById("output").innerHTML="";
+        
+    }
+
+
+//     let  head2=`<h1>ARRAY MULTIPLICATION</h1>`;
+//     for(var i = 0; i < 10; i++) {
+//   }
+</script><script src="script.js"></script>
 </html>
